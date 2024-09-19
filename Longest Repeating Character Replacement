@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        int right=0,left=0,change=0;
+        unordered_map<char,int>umap;
+        int max_fre=0;
+        int ans=0;
+        while(right<s.size()){
+            umap[s[right]]++;
+            max_fre=max(max_fre,umap[s[right]]);
+            int change=(right-left+1)-max_fre;
+            while(change>k){
+                 umap[s[left]]--;
+                 left++;
+                 for(auto nbr:umap){
+                    max_fre=max(max_fre,nbr.second);
+                    change=(right-left+1)-max_fre;
+                 }
+                 
+            }
+            ans=max(ans,right-left+1);
+            right++;
+        }
+        return ans;
+    }
+};
