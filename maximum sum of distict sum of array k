@@ -1,0 +1,30 @@
+class Solution {
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k) {
+        long long ans=0;
+        unordered_map<int,int>umap;
+        long long int curr=0;
+        int l=0;
+        for(int i=0;i<k;i++){
+            curr+=nums[i];
+            umap[nums[i]]++;
+        }
+        if(umap.size()==k){
+            ans=max(ans,curr);
+        }
+        for(int i=k;i<nums.size();i++){
+            curr-=nums[l];
+            curr+=nums[i];
+            umap[nums[l]]--;
+            if(umap[nums[l]]==0){
+                umap.erase(nums[l]);
+            }
+            umap[nums[i]]++;
+            if(umap.size()==k){
+                ans=max(ans,curr);
+            }
+            l++;
+        }
+        return ans;
+    }
+};
