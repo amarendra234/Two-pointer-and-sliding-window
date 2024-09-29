@@ -1,0 +1,20 @@
+#include <unordered_map>
+int kDistinctChars(int k, string &str)
+{
+    int l=0,r=0,ans=0;
+    unordered_map<char,int>umap;
+    while(r<str.size()){
+        umap[str[r]]++;
+        if(umap.size()>k){
+            umap[str[l]]--;
+            if(umap[str[l]]==0){
+                umap.erase(str[l]);
+            }
+            l++;
+        }
+        ans=max(ans,r-l+1);
+        r++;
+    }
+    return ans;
+}
+
